@@ -1,18 +1,18 @@
 .header-wrapper {
-    background: url("../../../assets/bkg.png") no-repeat center/cover;
     min-height: 400px;
-    mix-blend-mode: normal;
-    backdrop-filter: blur(4px);
     padding-top: 20px;
+    background: url("../../../assets/bkg.png") no-repeat center/cover;
+    backdrop-filter: blur(4px);
+    mix-blend-mode: normal;
 }
 
 .logo {
     font-family: "Montserrat", sans-serif;
-    margin: 0;
-    font-style: normal;
-    font-weight: 900;
     font-size: 20px;
+    font-weight: 900;
+    font-style: normal;
     line-height: 24px;
+    margin: 0;
     color: #f65261;
 }
 
@@ -21,76 +21,67 @@
 }
 
 .add-btn {
-    background: rgba(96, 96, 96, 0.68);
-    border-radius: 4px;
-    border: none;
-    color: #f65261;
-    cursor: pointer;
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
-    font-style: normal;
     font-weight: 600;
+    font-style: normal;
     line-height: 24px;
+    width: auto;
     padding: 11px 18px;
+    cursor: pointer;
     text-align: center;
     text-transform: uppercase;
-    width: auto;
-}
-
-.search-title-container{
-    padding-top: 35px;
-    padding-left: 60px;
+    color: #f65261;
+    border: none;
+    border-radius: 4px;
+    background: rgba(96, 96, 96, 0.68);
 }
 
 .search-title {
-    font-weight: 300;
     font-size: 40px;
+    font-weight: 300;
     line-height: 49px;
+    margin: 0;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #ffffff;
-    margin: 0;
-}
-
-.search-input-container {
-    padding-top: 40px;
 }
 
 .search-btn {
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
     font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
     line-height: 24px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    background: #F65261;
-    border-radius: 4px;
-    border: none;
-    padding: 12px 74px;
     width: auto;
+    padding: 12px 74px;
     cursor: pointer;
+    text-transform: uppercase;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    background: #f65261;
 }
 
 .search-input {
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
     font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
     line-height: 24px;
-    color: rgba(255, 255, 255, 0.3);
-    mix-blend-mode: normal;
-    background: rgba(50, 50, 50, 0.8);
-    opacity: 0.7;
-    border-radius: 4px;
-    max-width: 714px;
     width: 100%;
-    padding: 12px 20px;
-    border: none;
+    max-width: 714px;
     margin-right: 65px;
+    padding: 12px 20px;
+    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 4px;
+    background: rgba(50, 50, 50, 0.8);
+    mix-blend-mode: normal;
 }
 
 .search-input-inner-container {
-    max-width: 960px;
     width: 100%;
+    max-width: 960px;
 }

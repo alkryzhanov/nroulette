@@ -7,36 +7,20 @@ const cx = classNames.bind(styles);
 function Header() {
   return (
     <div className={cx("header-wrapper")}>
-      <div className="container">
-        <div className="row justify-content-between align-items-center">
-          <div className="col-auto">
-            <h1 className={styles.logo}>
-              netflix
-              <span>roulette</span>
-            </h1>
-          </div>
-          <div className="col-auto">
-            <button type="button" className={cx("add-btn")} name="add-btn">
-              + add movie
-            </button>
-          </div>
+      <div className="container mx-auto ">
+        <div className="flex justify-between items-center">
+          <h1 className={styles.logo}>
+            netflix
+            <span>roulette</span>
+          </h1>
+          <button type="button" className={cx("add-btn")} name="add-btn">
+            + add movie
+          </button>
         </div>
-        <div
-          className={`${cx(
-            "search-title-container",
-          )} row justify-content-start`}
-        >
-          <div className="col-auto">
+        <div className="flex justify-center pt-9">
+          <div className="w-full max-w-6xl">
             <h3 className={cx("search-title")}>FIND YOUR MOViE</h3>
-          </div>
-        </div>
-        <div className={`${cx("search-input-container")} row`}>
-          <div className="col d-flex justify-content-center">
-            <div
-              className={`${cx(
-                "search-input-inner-container",
-              )} d-flex justify-content-between`}
-            >
+            <div className="flex justify-between pt-10">
               <input
                 type="text"
                 name="search-input"
