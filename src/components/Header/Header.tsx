@@ -1,19 +1,28 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import classNames from "classnames/bind";
+import Logo from "../Logo/Logo";
 import styles from "./Header.module.css";
 
+type Props = {
+  onAddClick: Dispatch<SetStateAction<boolean>>;
+};
 const cx = classNames.bind(styles);
 
-function Header() {
+const Header = ({ onAddClick }: Props) => {
+  const onAddClickHandler = () => {
+    onAddClick(true);
+  };
   return (
-    <div className={cx("header-wrapper")}>
-      <div className="container mx-auto ">
+    <header className={cx("header-section")}>
+      <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <h1 className={styles.logo}>
-            netflix
-            <span>roulette</span>
-          </h1>
-          <button type="button" className={cx("add-btn")} name="add-btn">
+          <Logo />
+          <button
+            type="button"
+            className={cx("add-btn")}
+            name="add-btn"
+            onClick={onAddClickHandler}
+          >
             + add movie
           </button>
         </div>
@@ -38,8 +47,8 @@ function Header() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
-}
+};
 
 export default Header;

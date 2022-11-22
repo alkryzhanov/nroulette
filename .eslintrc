@@ -14,7 +14,8 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "react-hooks"
   ],
   "rules": {
     "react/function-component-definition": [
@@ -23,6 +24,21 @@
         "namedComponents": ["function-declaration", "arrow-function"],
         "unnamedComponents": "arrow-function"
       }
-    ]
+    ],
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "labelComponents": ["Label"],
+      "labelAttributes": ["label"],
+      "controlComponents": ["Input"],
+      "depth": 3
+    }],
+    "react/button-has-type": [2, {
+      "reset": false
+    }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "env": {
+    "browser": true,
+    "node": true
   }
 }

@@ -1,0 +1,63 @@
+.movie-list-item {
+    position: relative;
+    max-width: 460px;
+    height: 100%;
+    min-height: 530px;
+}
+
+.context-menu {
+    position: absolute;
+    top: 38px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 190px;
+    min-height: 110px;
+    padding-top: 32px;
+    border-radius: 4px;
+    background-color: rgba(35, 35, 35, 0.92);
+    backdrop-filter: blur(14px);
+}
+
+.context-menu-btn {
+    position: absolute;
+    top: 48px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #2a202d;
+}
+
+.context-menu-close-btn-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 12px;
+    height: 12px;
+}
+
+.context-menu-dot {
+    display: block;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+}
+
+.context-menu-item {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 7px 25px;
+    cursor: pointer;
+}
+
+.context-menu-item:hover {
+    background-color: #f65261;
+}
+
+
+

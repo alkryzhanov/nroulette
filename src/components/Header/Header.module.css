@@ -1,7 +1,8 @@
-.header-wrapper {
+.header-section {
     min-height: 400px;
     padding-top: 20px;
-    background: url("../../../assets/bkg.png") no-repeat center/cover;
+    background: url("../../assets/bkg.png") no-repeat center/cover;
+    background-color: #232323;
     backdrop-filter: blur(4px);
     mix-blend-mode: normal;
 }
