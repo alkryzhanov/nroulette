@@ -7,12 +7,25 @@ import closeIcon from "../../assets/close-btn.svg";
 type Props = {
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  movieInfo: {
+    id: number;
+    title: string;
+    release_date: string;
+    poster_path: string;
+    genres: [];
+  };
 };
 
 const cx = classNames.bind(styles);
 
-const MovieCard = ({ setIsDeleteModalOpen, setIsEditModalOpen }: Props) => {
+const MovieCard = ({
+  setIsDeleteModalOpen,
+  setIsEditModalOpen,
+  movieInfo,
+}: Props) => {
   const [isShow, setIsSHow] = useState<boolean>(false);
+  const [isCtxBtnShow, setIsCtxBtnSHow] = useState<boolean>(false);
+
   const toggleMenu = () => {
     setIsSHow((prevState) => !prevState);
   };
@@ -23,6 +36,12 @@ const MovieCard = ({ setIsDeleteModalOpen, setIsEditModalOpen }: Props) => {
 
   const editMovieHandler = () => {
     setIsEditModalOpen(true);
+  };
+
+  const ctxMenuBtnHandler = (evt: any) => {
+    if (evt.target.tagName === "IMG") {
+      setIsCtxBtnSHow((prevState) => !prevState);
+    }
   };
 
   const ctxMenu = (
@@ -54,29 +73,38 @@ const MovieCard = ({ setIsDeleteModalOpen, setIsEditModalOpen }: Props) => {
       </a>
     </div>
   );
+  const cxtMenuBtn = (
+    <button
+      type="button"
+      className={cx("context-menu-btn")}
+      onClick={toggleMenu}
+    >
+      <div className="flex flex-col justify-between items-center w-full h-5">
+        <span className={cx("context-menu-dot")} />
+        <span className={cx("context-menu-dot")} />
+        <span className={cx("context-menu-dot")} />
+      </div>
+    </button>
+  );
   return (
-    <li className={cx("movie-list-item", "font-medium", "pt-7")}>
-      <button
-        type="button"
-        className={cx("context-menu-btn")}
-        onClick={toggleMenu}
-      >
-        <div className="flex flex-col justify-between items-center w-full h-5">
-          <span className={cx("context-menu-dot")} />
-          <span className={cx("context-menu-dot")} />
-          <span className={cx("context-menu-dot")} />
-        </div>
-      </button>
+    <li
+      className={cx("movie-list-item", "font-medium", "pt-7")}
+      id={movieInfo.id.toString()}
+      onMouseEnter={ctxMenuBtnHandler}
+      onMouseLeave={ctxMenuBtnHandler}
+    >
+      {isCtxBtnShow && cxtMenuBtn}
       {isShow && ctxMenu}
+      {/* <img src={movieInfo.poster_path} alt="Movie poster" /> */}
       <img src={poster} alt="Movie poster" />
       <div className="flex justify-between items-center opacity-70 mix-blend-normal pt-5">
-        <span className="text-lg">Pulp Fiction</span>
+        <span className="text-lg">{movieInfo.title}</span>
         <span className="text-sm px-2 py-1 border-solid border border-slate-500 rounded">
-          2004
+          {new Date(movieInfo.release_date).getFullYear()}
         </span>
       </div>
       <span className="text-sm pt-2 opacity-30 mix-blend-normal">
-        Action & Adventure
+        {movieInfo.genres.slice(0, 2).join(", ")}
       </span>
     </li>
   );

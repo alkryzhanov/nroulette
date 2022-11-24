@@ -4,9 +4,14 @@ import MovieCard from "../MovieCard/MovieCard";
 type Props = {
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  movies: {}[];
-
   isLoading: boolean;
+  movies: {
+    id: number;
+    title: string;
+    release_date: string;
+    poster_path: string;
+    genres: [];
+  }[];
 };
 
 const MovieList = ({
@@ -15,12 +20,9 @@ const MovieList = ({
   movies,
   isLoading,
 }: Props) => {
-  // const movies = data.data;
-  // const resCount = movies.length || 0;
-
   if (isLoading) {
     return (
-      <div className="spinner" role="status">
+      <div className="h-full flex justify-center items-center" role="status">
         <span>Loading...</span>
       </div>
     );
@@ -33,12 +35,13 @@ const MovieList = ({
       </p>
       <ul className="flex justify-between flex-wrap pb-7">
         {movies.map((movie) => {
+          const movieInfo = { ...movie };
           return (
             <MovieCard
-              key={movie.id}
+              key={movieInfo.id}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
-              movieInfo={...movie}
+              movieInfo={movieInfo}
             />
           );
         })}

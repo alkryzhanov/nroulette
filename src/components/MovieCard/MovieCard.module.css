@@ -5,6 +5,11 @@
     min-height: 530px;
 }
 
+.movie-list-item > img {
+    cursor: pointer;
+}
+
+
 .context-menu {
     position: absolute;
     top: 38px;

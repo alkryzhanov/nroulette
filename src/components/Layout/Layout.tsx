@@ -35,8 +35,8 @@ const Layout = () => {
   return (
     <>
       <Header onAddClick={setIsAddModalOpen} />
-      <main className="main-section mt-2">
-        <div className="container mx-auto">
+      <main className={`main-section mt-2 ${isLoading ? "h-full" : ""}`}>
+        <div className={`container mx-auto ${isLoading ? "h-full" : ""}`}>
           <ErrBoundary>
             <Filter />
             <MovieList
