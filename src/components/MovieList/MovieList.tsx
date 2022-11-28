@@ -1,25 +1,15 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
-
-type Props = {
-  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  isLoading: boolean;
-  movies: {
-    id: number;
-    title: string;
-    release_date: string;
-    poster_path: string;
-    genres: [];
-  }[];
-};
+import { MovieListProps } from "./type";
 
 const MovieList = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
+  setIsMovieDetailsShow,
+  setMovieId,
   movies,
   isLoading,
-}: Props) => {
+}: MovieListProps) => {
   if (isLoading) {
     return (
       <div className="h-full flex justify-center items-center" role="status">
@@ -33,7 +23,7 @@ const MovieList = ({
       <p className="font-normal pt-6">
         <span className="font-semibold">{movies.length}</span> movies found
       </p>
-      <ul className="flex justify-between flex-wrap pb-7">
+      <ul className="flex flex-wrap justify-between pb-7">
         {movies.map((movie) => {
           const movieInfo = { ...movie };
           return (
@@ -41,6 +31,8 @@ const MovieList = ({
               key={movieInfo.id}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
+              setIsMovieDetailsShow={setIsMovieDetailsShow}
+              setMovieId={setMovieId}
               movieInfo={movieInfo}
             />
           );

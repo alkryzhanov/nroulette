@@ -1,25 +1,25 @@
 .header-section {
-    min-height: 400px;
-    padding-top: 20px;
-    background: url("../../assets/bkg.png") no-repeat center/cover;
     background-color: #232323;
+}
+
+.header-section-bg {
+    min-height: 400px;
+    background: url("../../assets/bkg.png") no-repeat center/cover;
     backdrop-filter: blur(4px);
     mix-blend-mode: normal;
 }
 
 .logo {
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-    font-style: normal;
-    line-height: 24px;
-    margin: 0;
-    color: #f65261;
+    /*font-size: 20px;*/
+    /*font-weight: 900;*/
+    /*line-height: 24px;*/
+    /*margin: 0;*/
+    /*color: #f65261;*/
 }
 
-.logo > span {
-    font-weight: 500;
-}
+/*.logo > span {*/
+/*    font-weight: 500;*/
+/*}*/
 
 .add-btn {
     font-family: "Montserrat", sans-serif;
@@ -86,3 +86,15 @@
     width: 100%;
     max-width: 960px;
 }
+
+
+/*font-weight: 500;*/
+/*font-size: 14px;*/
+/*line-height: 17px;*/
+/*!* identical to box height *!*/
+
+
+/*color: #FFFFFF;*/
+
+/*mix-blend-mode: normal;*/
+/*opacity: 0.5;*/

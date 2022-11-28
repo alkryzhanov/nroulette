@@ -1,13 +1,25 @@
 import React from "react";
-import styles from "../Header/Header.module.css";
 
-const Logo = () => {
+type LogoProps = {
+  isMovieDetailsShow?: boolean;
+} & typeof defaultProps;
+
+const defaultProps = {
+  isMovieDetailsShow: false,
+};
+
+const Logo = ({ isMovieDetailsShow }: LogoProps) => {
+  const clsHeader = `text-xl leading-6 m-0 text-radical-red 
+  ${isMovieDetailsShow ? "font-light" : "font-black"}`;
+  const clsSpan = `${isMovieDetailsShow ? "font-light" : "font-medium"}`;
+
   return (
-    <h1 className={styles.logo}>
+    <h1 className={clsHeader}>
       netflix
-      <span>roulette</span>
+      <span className={clsSpan}>roulette</span>
     </h1>
   );
 };
 
+Logo.defaultProps = defaultProps;
 export default Logo;

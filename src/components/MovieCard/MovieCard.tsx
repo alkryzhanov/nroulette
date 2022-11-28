@@ -1,12 +1,13 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./MovieCard.module.css";
-import poster from "../../assets/image-1.jpg";
 import closeIcon from "../../assets/close-btn.svg";
 
 type Props = {
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
+  setMovieId: Dispatch<SetStateAction<number | null>>;
   movieInfo: {
     id: number;
     title: string;
@@ -21,10 +22,12 @@ const cx = classNames.bind(styles);
 const MovieCard = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
+  setIsMovieDetailsShow,
+  setMovieId,
   movieInfo,
 }: Props) => {
   const [isShow, setIsSHow] = useState<boolean>(false);
-  const [isCtxBtnShow, setIsCtxBtnSHow] = useState<boolean>(false);
+  const [isCtxBtnShow, setIsCtxBtnShow] = useState<boolean>(false);
 
   const toggleMenu = () => {
     setIsSHow((prevState) => !prevState);
@@ -38,10 +41,16 @@ const MovieCard = ({
     setIsEditModalOpen(true);
   };
 
-  const ctxMenuBtnHandler = (evt: any) => {
-    if (evt.target.tagName === "IMG") {
-      setIsCtxBtnSHow((prevState) => !prevState);
+  const ctxMenuBtnHandler = (evt: MouseEvent, isShown = false) => {
+    const target = evt.target as HTMLButtonElement;
+    if (target.tagName === "IMG") {
+      setIsCtxBtnShow(isShown);
     }
+  };
+
+  const onClickMovieHandler = (id: number) => {
+    setIsMovieDetailsShow(true);
+    setMovieId(id);
   };
 
   const ctxMenu = (
@@ -87,16 +96,21 @@ const MovieCard = ({
     </button>
   );
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
     <li
       className={cx("movie-list-item", "font-medium", "pt-7")}
       id={movieInfo.id.toString()}
-      onMouseEnter={ctxMenuBtnHandler}
-      onMouseLeave={ctxMenuBtnHandler}
+      onMouseEnter={(e) => ctxMenuBtnHandler(e, true)}
+      onMouseLeave={(e) => ctxMenuBtnHandler(e, false)}
+      onClick={onClickMovieHandler.bind(null, movieInfo.id)}
     >
       {isCtxBtnShow && cxtMenuBtn}
       {isShow && ctxMenu}
-      {/* <img src={movieInfo.poster_path} alt="Movie poster" /> */}
-      <img src={poster} alt="Movie poster" />
+      <img
+        src={movieInfo.poster_path}
+        alt="Movie poster"
+        className="max-w-xs"
+      />
       <div className="flex justify-between items-center opacity-70 mix-blend-normal pt-5">
         <span className="text-lg">{movieInfo.title}</span>
         <span className="text-sm px-2 py-1 border-solid border border-slate-500 rounded">

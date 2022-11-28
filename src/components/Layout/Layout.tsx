@@ -15,6 +15,9 @@ const Layout = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMovieDetailsShow, setIsMovieDetailsShow] = useState(false);
+  const [movieId, setMovieId] = useState(null);
+  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
     const getMovies = async () => {
@@ -32,9 +35,21 @@ const Layout = () => {
 
     getMovies();
   }, []);
+  useEffect(() => {
+    if (movieId) {
+      const foundMovie =
+        movies.find((item: { id: number }) => movieId === item.id) || null;
+      setMovie(foundMovie);
+    }
+  }, [movieId]);
   return (
     <>
-      <Header onAddClick={setIsAddModalOpen} />
+      <Header
+        onAddClick={setIsAddModalOpen}
+        isMovieDetailsShow={isMovieDetailsShow}
+        setIsMovieDetailsShow={setIsMovieDetailsShow}
+        movie={movie}
+      />
       <main className={`main-section mt-2 ${isLoading ? "h-full" : ""}`}>
         <div className={`container mx-auto ${isLoading ? "h-full" : ""}`}>
           <ErrBoundary>
@@ -42,6 +57,8 @@ const Layout = () => {
             <MovieList
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
+              setIsMovieDetailsShow={setIsMovieDetailsShow}
+              setMovieId={setMovieId}
               movies={movies}
               isLoading={isLoading}
             />
