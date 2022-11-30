@@ -4,22 +4,10 @@
 
 .header-section-bg {
     min-height: 400px;
-    background: url("../../assets/bkg.png") no-repeat center/cover;
+    background: url("../../assets/bkg.png") no-repeat center/cover #232323;
     backdrop-filter: blur(4px);
     mix-blend-mode: normal;
 }
-
-.logo {
-    /*font-size: 20px;*/
-    /*font-weight: 900;*/
-    /*line-height: 24px;*/
-    /*margin: 0;*/
-    /*color: #f65261;*/
-}
-
-/*.logo > span {*/
-/*    font-weight: 500;*/
-/*}*/
 
 .add-btn {
     font-family: "Montserrat", sans-serif;
@@ -61,7 +49,6 @@
     color: #ffffff;
     border: none;
     border-radius: 4px;
-    background: #f65261;
 }
 
 .search-input {

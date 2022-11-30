@@ -11,7 +11,6 @@ const Header = ({
   onAddClick,
   isMovieDetailsShow,
   setIsMovieDetailsShow,
-  movie,
 }: HeaderProps) => {
   const onAddClickHandler = () => {
     onAddClick(true);
@@ -26,7 +25,6 @@ const Header = ({
         {isMovieDetailsShow ? (
           <MovieDetails
             isMovieDetailsShow={isMovieDetailsShow}
-            movie={movie}
             setIsMovieDetailsShow={setIsMovieDetailsShow}
           />
         ) : (
@@ -35,7 +33,7 @@ const Header = ({
               <Logo />
               <button
                 type="button"
-                className={cx("add-btn")}
+                className={cx("add-btn", "bg-gray-one")}
                 name="add-btn"
                 onClick={onAddClickHandler}
               >
@@ -54,7 +52,7 @@ const Header = ({
                   />
                   <button
                     type="button"
-                    className={cx("search-btn")}
+                    className={cx("search-btn", "bg-radical-red")}
                     name="search-btn"
                   >
                     search

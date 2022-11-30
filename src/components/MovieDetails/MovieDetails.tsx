@@ -1,27 +1,39 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import Logo from "../Logo/Logo";
 import searchIcon from "../../assets/search-btn.svg";
-import poster from "../../assets/image-1.jpg";
+import { useAppSelector } from "../../hooks";
 
 type MovieDetailsProps = {
   isMovieDetailsShow: boolean;
-  movie: null | {
-    title: string;
-    vote_average: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    genres: string[];
-    runtime: number;
-  };
   setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
 };
 
 const MovieDetails = ({
   isMovieDetailsShow,
-  movie,
   setIsMovieDetailsShow,
 }: MovieDetailsProps) => {
+  const movie = useAppSelector((state) => state.movie.movieDetails);
+  const isMovieDetailsLoading = useAppSelector(
+    (state) => state.movie.isMovieDetailsLoading,
+  );
+  if (isMovieDetailsLoading) {
+    return (
+      <div className="h-96 h-full flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#f65261"
+            ariaLabel="three-dots-loading"
+            visible
+          />
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
   if (!movie) {
     return <p>There is no movie info!</p>;
   }

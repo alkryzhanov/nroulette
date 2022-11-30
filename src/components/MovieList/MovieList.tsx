@@ -1,15 +1,16 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
-import { MovieListProps } from "./type";
+import { MovieListProps } from "../../types";
+import { useAppSelector } from "../../hooks";
 
 const MovieList = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
   setIsMovieDetailsShow,
-  setMovieId,
-  movies,
-  isLoading,
 }: MovieListProps) => {
+  const isLoading = useAppSelector((state) => state.movies.isLoading);
+  const movies = useAppSelector((state) => state.movies.movies);
+
   if (isLoading) {
     return (
       <div className="h-full flex justify-center items-center" role="status">
@@ -24,16 +25,14 @@ const MovieList = ({
         <span className="font-semibold">{movies.length}</span> movies found
       </p>
       <ul className="flex flex-wrap justify-between pb-7">
-        {movies.map((movie) => {
-          const movieInfo = { ...movie };
+        {movies?.map((movie) => {
           return (
             <MovieCard
-              key={movieInfo.id}
+              key={movie.id}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
               setIsMovieDetailsShow={setIsMovieDetailsShow}
-              setMovieId={setMovieId}
-              movieInfo={movieInfo}
+              movieInfo={movie}
             />
           );
         })}

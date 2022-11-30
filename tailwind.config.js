@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         "radical-red": "#f65261",
+        "gray-one": "rgba(96, 96, 96, 0.7)",
       },
     },
   },

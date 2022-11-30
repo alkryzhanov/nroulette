@@ -2,12 +2,13 @@ import React, { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./MovieCard.module.css";
 import closeIcon from "../../assets/close-btn.svg";
+import { useAppDispatch } from "../../hooks";
+import { fetchMovieById } from "../../store/movie-details-slice";
 
 type Props = {
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
-  setMovieId: Dispatch<SetStateAction<number | null>>;
   movieInfo: {
     id: number;
     title: string;
@@ -23,11 +24,11 @@ const MovieCard = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
   setIsMovieDetailsShow,
-  setMovieId,
   movieInfo,
 }: Props) => {
   const [isShow, setIsSHow] = useState<boolean>(false);
   const [isCtxBtnShow, setIsCtxBtnShow] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const toggleMenu = () => {
     setIsSHow((prevState) => !prevState);
@@ -50,7 +51,7 @@ const MovieCard = ({
 
   const onClickMovieHandler = (id: number) => {
     setIsMovieDetailsShow(true);
-    setMovieId(id);
+    dispatch(fetchMovieById(id));
   };
 
   const ctxMenu = (
