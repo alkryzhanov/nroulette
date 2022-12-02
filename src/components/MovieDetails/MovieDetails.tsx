@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { ThreeDots } from "react-loader-spinner";
 import Logo from "../Logo/Logo";
+import Spinner from "../common/Spinner";
 import searchIcon from "../../assets/search-btn.svg";
 import { useAppSelector } from "../../hooks";
 
@@ -17,22 +17,9 @@ const MovieDetails = ({
   const isMovieDetailsLoading = useAppSelector(
     (state) => state.movie.isMovieDetailsLoading,
   );
+
   if (isMovieDetailsLoading) {
-    return (
-      <div className="h-96 h-full flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center">
-          <ThreeDots
-            height="80"
-            width="80"
-            radius="9"
-            color="#f65261"
-            ariaLabel="three-dots-loading"
-            visible
-          />
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
+    return <Spinner />;
   }
   if (!movie) {
     return <p>There is no movie info!</p>;

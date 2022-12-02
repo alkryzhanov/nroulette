@@ -13,7 +13,7 @@ type Props = {
     id: number;
     title: string;
     release_date: string;
-    poster_path: string;
+    poster_path: string | null;
     genres: [];
   };
 };
@@ -26,10 +26,15 @@ const MovieCard = ({
   setIsMovieDetailsShow,
   movieInfo,
 }: Props) => {
+  const PLACEHOLDER_IMG_LINK = `https://via.placeholder.com/400x600?text=${movieInfo.title}`;
+  const INITIAL_SRC =
+    movieInfo.poster_path === null
+      ? PLACEHOLDER_IMG_LINK
+      : movieInfo.poster_path;
+  const dispatch = useAppDispatch();
   const [isShow, setIsSHow] = useState<boolean>(false);
   const [isCtxBtnShow, setIsCtxBtnShow] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-
+  const [src, setSrc] = useState(INITIAL_SRC);
   const toggleMenu = () => {
     setIsSHow((prevState) => !prevState);
   };
@@ -52,6 +57,11 @@ const MovieCard = ({
   const onClickMovieHandler = (id: number) => {
     setIsMovieDetailsShow(true);
     dispatch(fetchMovieById(id));
+  };
+
+  const onImgErrorHandler = () => {
+    // eslint-disable-next-line no-param-reassign
+    setSrc(`https://via.placeholder.com/400x600?text=${movieInfo.title}`);
   };
 
   const ctxMenu = (
@@ -99,7 +109,7 @@ const MovieCard = ({
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
     <li
-      className={cx("movie-list-item", "font-medium", "pt-7")}
+      className="font-medium pt-7 flex justify-center"
       id={movieInfo.id.toString()}
       onMouseEnter={(e) => ctxMenuBtnHandler(e, true)}
       onMouseLeave={(e) => ctxMenuBtnHandler(e, false)}
@@ -107,20 +117,23 @@ const MovieCard = ({
     >
       {isCtxBtnShow && cxtMenuBtn}
       {isShow && ctxMenu}
-      <img
-        src={movieInfo.poster_path}
-        alt="Movie poster"
-        className="max-w-xs"
-      />
-      <div className="flex justify-between items-center opacity-70 mix-blend-normal pt-5">
-        <span className="text-lg">{movieInfo.title}</span>
-        <span className="text-sm px-2 py-1 border-solid border border-slate-500 rounded">
-          {new Date(movieInfo.release_date).getFullYear()}
+      <div className={cx("movie-list-item")}>
+        <img
+          src={src}
+          alt={movieInfo.title}
+          className="max-w-xs"
+          onError={onImgErrorHandler}
+        />
+        <div className="flex justify-between items-center opacity-70 mix-blend-normal pt-5">
+          <span className="text-lg">{movieInfo.title}</span>
+          <span className="text-sm px-2 py-1 border-solid border border-slate-500 rounded">
+            {new Date(movieInfo.release_date).getFullYear()}
+          </span>
+        </div>
+        <span className="text-sm pt-2 opacity-30 mix-blend-normal">
+          {movieInfo.genres.slice(0, 2).join(", ")}
         </span>
       </div>
-      <span className="text-sm pt-2 opacity-30 mix-blend-normal">
-        {movieInfo.genres.slice(0, 2).join(", ")}
-      </span>
     </li>
   );
 };

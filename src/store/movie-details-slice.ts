@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { MoviesAPI } from "../constants";
+import { MOVIES_URL } from "../constants";
 
 type MovieDetailsType = {
   title: string;
@@ -25,7 +25,7 @@ const initialState = {
 export const fetchMovieById = createAsyncThunk(
   "users/fetchMovieById",
   async (movieId: number) => {
-    const res = await axios.get(`${MoviesAPI.MainUrl}/${movieId}`);
+    const res = await axios.get(`${MOVIES_URL}/${movieId}`);
     return res.data;
   },
 );
