@@ -7,7 +7,6 @@ import { useAppSelector } from "../../hooks";
 const MovieList = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
-  setIsMovieDetailsShow,
 }: MovieListProps) => {
   const { isLoading, movies, error } = useAppSelector((state) => state.movies);
 
@@ -39,7 +38,7 @@ const MovieList = ({
               key={movie.id}
               setIsDeleteModalOpen={setIsDeleteModalOpen}
               setIsEditModalOpen={setIsEditModalOpen}
-              setIsMovieDetailsShow={setIsMovieDetailsShow}
+              // setIsMovieDetailsShow={setIsMovieDetailsShow}
               movieInfo={movie}
             />
           );

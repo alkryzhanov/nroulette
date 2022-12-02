@@ -1,25 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { MOVIES_URL } from "../constants";
-
-type MovieDetailsType = {
-  title: string;
-  vote_average: number;
-  release_date: string;
-  poster_path: string;
-  overview: string;
-  genres: string[];
-  runtime: number;
-};
-
-type MovieState = {
-  movieDetails: MovieDetailsType | null;
-  isMovieDetailsLoading: boolean;
-};
+import { MovieState } from "../types";
 
 const initialState = {
   movieDetails: null,
   isMovieDetailsLoading: false,
+  isMovieDetailsShow: false,
 } as MovieState;
 
 export const fetchMovieById = createAsyncThunk(
@@ -33,16 +20,33 @@ export const fetchMovieById = createAsyncThunk(
 const movieDetailsSlice = createSlice({
   name: "movie details",
   initialState,
-  reducers: {},
+  reducers: {
+    // eslint-disable-next-line no-param-reassign
+    showMovieDetails: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.isMovieDetailsShow = true;
+    },
+    // eslint-disable-next-line no-param-reassign
+    hideMovieDetails: (state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.isMovieDetailsShow = false;
+      // eslint-disable-next-line no-param-reassign
+      state.movieDetails = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovieById.pending, (state) => {
         // eslint-disable-next-line no-param-reassign
         state.isMovieDetailsLoading = true;
+        // eslint-disable-next-line no-param-reassign
+        state.movieDetails = null;
       })
       .addCase(fetchMovieById.fulfilled, (state, action) => {
         // eslint-disable-next-line no-param-reassign
         state.isMovieDetailsLoading = false;
+        // eslint-disable-next-line no-param-reassign
+        state.isMovieDetailsShow = true;
         // @ts-ignore
         // eslint-disable-next-line no-param-reassign
         state.movieDetails = action.payload;
@@ -50,4 +54,5 @@ const movieDetailsSlice = createSlice({
   },
 });
 
+export const { showMovieDetails, hideMovieDetails } = movieDetailsSlice.actions;
 export default movieDetailsSlice.reducer;

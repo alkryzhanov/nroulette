@@ -4,11 +4,12 @@ import styles from "./MovieCard.module.css";
 import closeIcon from "../../assets/close-btn.svg";
 import { useAppDispatch } from "../../hooks";
 import { fetchMovieById } from "../../store/movie-details-slice";
+import { PLACEHOLDER_IMG_LINK } from "../../constants";
 
 type Props = {
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
+  // setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
   movieInfo: {
     id: number;
     title: string;
@@ -23,13 +24,11 @@ const cx = classNames.bind(styles);
 const MovieCard = ({
   setIsDeleteModalOpen,
   setIsEditModalOpen,
-  setIsMovieDetailsShow,
   movieInfo,
 }: Props) => {
-  const PLACEHOLDER_IMG_LINK = `https://via.placeholder.com/400x600?text=${movieInfo.title}`;
   const INITIAL_SRC =
     movieInfo.poster_path === null
-      ? PLACEHOLDER_IMG_LINK
+      ? `${PLACEHOLDER_IMG_LINK}${movieInfo.title}`
       : movieInfo.poster_path;
   const dispatch = useAppDispatch();
   const [isShow, setIsSHow] = useState<boolean>(false);
@@ -55,13 +54,12 @@ const MovieCard = ({
   };
 
   const onClickMovieHandler = (id: number) => {
-    setIsMovieDetailsShow(true);
     dispatch(fetchMovieById(id));
   };
 
   const onImgErrorHandler = () => {
     // eslint-disable-next-line no-param-reassign
-    setSrc(`https://via.placeholder.com/400x600?text=${movieInfo.title}`);
+    setSrc(`${PLACEHOLDER_IMG_LINK}${movieInfo.title}`);
   };
 
   const ctxMenu = (
