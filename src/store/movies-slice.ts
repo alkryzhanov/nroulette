@@ -1,28 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { MOVIES_URL } from "../constants";
+import { MOVIES_URL, StatusValues } from "../constants";
+import { MoviesState } from "../types";
 
-type MovieType = {
-  id: number;
-  title: string;
-  release_date: string;
-  poster_path: string;
-  genres: [];
-};
-
-type MoviesType = MovieType[];
-
-type MoviesState = {
-  movies: MoviesType;
-  isLoading: boolean;
-  error: string;
-};
-
-const initialState = {
+const initialState: MoviesState = {
+  status: "idle",
   movies: [],
   isLoading: false,
-  error: "",
-} as MoviesState;
+  errors: null,
+};
 
 export const fetchAllMovies = createAsyncThunk(
   "movies/fetchAllMovies",
@@ -31,7 +17,7 @@ export const fetchAllMovies = createAsyncThunk(
       const res = await axios.get(`${MOVIES_URL}?&sortOrder=asc${query}`);
       return res.data.data;
     } catch (e: any) {
-      return rejectWithValue(e.response.data);
+      return rejectWithValue({ message: e.response.data });
     }
   },
 );
@@ -39,28 +25,25 @@ export const fetchAllMovies = createAsyncThunk(
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllMovies.pending, (state) => {
-        // eslint-disable-next-line no-param-reassign
-        state.isLoading = true;
+        state.status = StatusValues.LOADING;
       })
       .addCase(fetchAllMovies.fulfilled, (state, action) => {
-        // eslint-disable-next-line no-param-reassign
-        state.isLoading = false;
-        // eslint-disable-next-line no-param-reassign
+        state.status = StatusValues.INITIAL;
         state.movies = action.payload;
       })
       .addCase(fetchAllMovies.rejected, (state, action) => {
-        // eslint-disable-next-line no-param-reassign
-        state.isLoading = false;
-        // eslint-disable-next-line no-param-reassign
+        state.status = StatusValues.FAILED;
         // @ts-ignore
-        // eslint-disable-next-line no-param-reassign
-        state.error = action.payload;
+        state.errors = action.payload;
       });
   },
 });
-
 export default moviesSlice.reducer;

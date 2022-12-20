@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import movies from "./movies-slice";
 import movie from "./movie-details-slice";
+import modal from "./modal-slice";
 
 const store = configureStore({
   reducer: {
     movies,
     movie,
+    modal,
   },
 });
 

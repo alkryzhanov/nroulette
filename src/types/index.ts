@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 export type MovieType = {
   id: number;
   title: string;
@@ -10,31 +8,48 @@ export type MovieType = {
 
 export type MoviesType = MovieType[];
 
-export type MovieListProps = {
-  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  // setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
-  // setMovieId: Dispatch<SetStateAction<any>>;
-};
-
-export type HeaderProps = {
-  onAddClick: Dispatch<SetStateAction<boolean>>;
-  // isMovieDetailsShow: boolean;
-  // setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
-};
-
 export type MovieDetailsType = {
   title: string;
   vote_average: number;
-  release_date: string;
+  release_date: string | Date;
   poster_path: string;
   overview: string;
   genres: string[];
   runtime: number;
+  id?: number;
 };
 
 export type MovieState = {
+  movieStatus: string;
   movieDetails: MovieDetailsType | null;
   isMovieDetailsLoading: boolean;
   isMovieDetailsShow: boolean;
+  movieErrors: null | {};
+  movieId: string;
+};
+
+export type MoviesState = {
+  status: string;
+  movies: MoviesType;
+  isLoading: boolean;
+  errors: null | { [key: string]: string };
+};
+
+export type FormikInitialValuesType = {
+  title: string;
+  release_date: string;
+  poster_path: string;
+  vote_average: string;
+  genres: string;
+  runtime: string;
+  overview: string;
+};
+
+export type ErrorDataType = {
+  [key: string]: string;
+};
+
+export type ModalSliceInitialType = {
+  modalType: string;
+  isModalShown: boolean;
 };

@@ -2,16 +2,18 @@ import React from "react";
 import classNames from "classnames/bind";
 import Logo from "../Logo/Logo";
 import MovieDetails from "../MovieDetails/MovieDetails";
-import { HeaderProps } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { showModal } from "../../store/modal-slice";
+import { MODALS } from "../../constants";
 import styles from "./Header.module.css";
-import { useAppSelector } from "../../hooks";
 
 const cx = classNames.bind(styles);
 
-const Header = ({ onAddClick }: HeaderProps) => {
+const Header = () => {
+  const dispatch = useAppDispatch();
   const { isMovieDetailsShow } = useAppSelector((state) => state.movie);
-  const onAddClickHandler = () => {
-    onAddClick(true);
+  const onClickHandler = () => {
+    dispatch(showModal(MODALS.ADD_MOVIE_MODAL));
   };
 
   let headerView = (
@@ -22,7 +24,7 @@ const Header = ({ onAddClick }: HeaderProps) => {
           type="button"
           className={cx("add-btn", "bg-gray-one")}
           name="add-btn"
-          onClick={onAddClickHandler}
+          onClick={onClickHandler}
         >
           + add movie
         </button>

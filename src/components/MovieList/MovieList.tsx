@@ -1,26 +1,23 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
 import Spinner from "../common/Spinner";
-import { MovieListProps } from "../../types";
 import { useAppSelector } from "../../hooks";
+import { StatusValues } from "../../constants";
 
-const MovieList = ({
-  setIsDeleteModalOpen,
-  setIsEditModalOpen,
-}: MovieListProps) => {
-  const { isLoading, movies, error } = useAppSelector((state) => state.movies);
+const MovieList = () => {
+  const { status, movies, errors } = useAppSelector((state) => state.movies);
 
-  if (isLoading) {
+  if (status === StatusValues.LOADING) {
     return <Spinner />;
   }
 
-  if (error) {
+  if (status === StatusValues.FAILED && errors?.message) {
     return (
       <div
         className="h-full max-h-screen flex justify-center items-center"
         role="status"
       >
-        <span>{error}</span>
+        <span>{errors?.message}</span>
       </div>
     );
   }
@@ -30,18 +27,9 @@ const MovieList = ({
       <p className="font-normal pt-6">
         <span className="font-semibold">{movies.length}</span> movies found
       </p>
-      {/* <ul className="flex flex-wrap justify-between pb-7">     */}
       <ul className="grid grid-cols-3">
         {movies?.map((movie) => {
-          return (
-            <MovieCard
-              key={movie.id}
-              setIsDeleteModalOpen={setIsDeleteModalOpen}
-              setIsEditModalOpen={setIsEditModalOpen}
-              // setIsMovieDetailsShow={setIsMovieDetailsShow}
-              movieInfo={movie}
-            />
-          );
+          return <MovieCard key={movie.id} movieInfo={movie} />;
         })}
       </ul>
     </>

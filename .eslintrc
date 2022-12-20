@@ -35,7 +35,8 @@
       "reset": false
     }],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "no-param-reassign": ["error", { "props": false }]
   },
   "env": {
     "browser": true,

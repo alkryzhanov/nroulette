@@ -1,56 +1,65 @@
-import React, { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./MovieCard.module.css";
 import closeIcon from "../../assets/close-btn.svg";
 import { useAppDispatch } from "../../hooks";
-import { fetchMovieById } from "../../store/movie-details-slice";
-import { PLACEHOLDER_IMG_LINK } from "../../constants";
+import {
+  fetchMovieById,
+  fetchMovieToEdit,
+  setMovieId,
+} from "../../store/movie-details-slice";
+import { MODALS, PLACEHOLDER_IMG_LINK } from "../../constants";
+import { MovieType } from "../../types";
+import { showModal } from "../../store/modal-slice";
 
-type Props = {
-  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  // setIsMovieDetailsShow: Dispatch<SetStateAction<boolean>>;
-  movieInfo: {
-    id: number;
-    title: string;
-    release_date: string;
-    poster_path: string | null;
-    genres: [];
-  };
+type MovieCardType = {
+  movieInfo: MovieType;
 };
 
 const cx = classNames.bind(styles);
 
-const MovieCard = ({
-  setIsDeleteModalOpen,
-  setIsEditModalOpen,
-  movieInfo,
-}: Props) => {
+const MovieCard = ({ movieInfo }: MovieCardType) => {
   const INITIAL_SRC =
     movieInfo.poster_path === null
       ? `${PLACEHOLDER_IMG_LINK}${movieInfo.title}`
       : movieInfo.poster_path;
   const dispatch = useAppDispatch();
-  const [isShow, setIsSHow] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
   const [isCtxBtnShow, setIsCtxBtnShow] = useState<boolean>(false);
   const [src, setSrc] = useState(INITIAL_SRC);
-  const toggleMenu = () => {
-    setIsSHow((prevState) => !prevState);
+  const movieId = movieInfo.id.toString();
+  const toggleMenu = (evt: MouseEvent) => {
+    evt.stopPropagation();
+
+    setIsShow((prevState) => !prevState);
   };
 
-  const deleteMovieHandler = () => {
-    setIsDeleteModalOpen(true);
+  const deleteMovieHandler = (evt: MouseEvent) => {
+    evt.stopPropagation();
+
+    setIsShow(false);
+    setIsCtxBtnShow(false);
+
+    dispatch(showModal(MODALS.DELETE_MODAL));
+    dispatch(setMovieId(movieInfo.id.toString()));
   };
 
-  const editMovieHandler = () => {
-    setIsEditModalOpen(true);
+  const editMovieHandler = (evt: MouseEvent) => {
+    evt.stopPropagation();
+
+    setIsShow(false);
+    setIsCtxBtnShow(false);
+
+    dispatch(showModal(MODALS.EDIT_MODAL));
+    dispatch(fetchMovieToEdit(movieInfo.id));
   };
 
-  const ctxMenuBtnHandler = (evt: MouseEvent, isShown = false) => {
-    const target = evt.target as HTMLButtonElement;
-    if (target.tagName === "IMG") {
-      setIsCtxBtnShow(isShown);
-    }
+  const onMouseEnterHandler = () => {
+    setIsCtxBtnShow(true);
+  };
+
+  const onMouseLeaveHandler = () => {
+    setIsCtxBtnShow(false);
   };
 
   const onClickMovieHandler = (id: number) => {
@@ -78,20 +87,20 @@ const MovieCard = ({
       <a
         href="/#"
         className={cx("context-menu-item")}
-        onClick={editMovieHandler}
+        onClick={(evt) => editMovieHandler(evt)}
       >
         Edit
       </a>
       <a
         href="/#"
         className={cx("context-menu-item")}
-        onClick={deleteMovieHandler}
+        onClick={(evt) => deleteMovieHandler(evt)}
       >
         Delete
       </a>
     </div>
   );
-  const cxtMenuBtn = (
+  const ctxMenuBtn = (
     <button
       type="button"
       className={cx("context-menu-btn")}
@@ -105,17 +114,16 @@ const MovieCard = ({
     </button>
   );
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-    <li
-      className="font-medium pt-7 flex justify-center"
-      id={movieInfo.id.toString()}
-      onMouseEnter={(e) => ctxMenuBtnHandler(e, true)}
-      onMouseLeave={(e) => ctxMenuBtnHandler(e, false)}
-      onClick={onClickMovieHandler.bind(null, movieInfo.id)}
-    >
-      {isCtxBtnShow && cxtMenuBtn}
-      {isShow && ctxMenu}
-      <div className={cx("movie-list-item")}>
+    <li className="font-medium pt-7 flex justify-center" id={movieId}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/mouse-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+      <div
+        className={cx("movie-list-item")}
+        onMouseOver={onMouseEnterHandler}
+        onMouseLeave={onMouseLeaveHandler}
+        onClick={onClickMovieHandler.bind(null, movieInfo.id)}
+      >
+        {isCtxBtnShow && ctxMenuBtn}
+        {isShow && ctxMenu}
         <img
           src={src}
           alt={movieInfo.title}
