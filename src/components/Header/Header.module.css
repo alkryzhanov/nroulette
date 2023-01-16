@@ -67,21 +67,10 @@
     border-radius: 4px;
     background: rgba(50, 50, 50, 0.8);
     mix-blend-mode: normal;
+    cursor: pointer;
 }
 
 .search-input-inner-container {
     width: 100%;
     max-width: 960px;
 }
-
-
-/*font-weight: 500;*/
-/*font-size: 14px;*/
-/*line-height: 17px;*/
-/*!* identical to box height *!*/
-
-
-/*color: #FFFFFF;*/
-
-/*mix-blend-mode: normal;*/
-/*opacity: 0.5;*/

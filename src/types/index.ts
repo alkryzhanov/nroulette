@@ -23,7 +23,6 @@ export type MovieState = {
   movieStatus: string;
   movieDetails: MovieDetailsType | null;
   isMovieDetailsLoading: boolean;
-  isMovieDetailsShow: boolean;
   movieErrors: null | {};
   movieId: string;
 };

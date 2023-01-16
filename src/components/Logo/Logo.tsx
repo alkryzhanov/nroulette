@@ -1,25 +1,25 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import classNames from "classnames";
 
-type LogoProps = {
-  isMovieDetailsShow?: boolean;
-} & typeof defaultProps;
-
-const defaultProps = {
-  isMovieDetailsShow: false,
-};
-
-const Logo = ({ isMovieDetailsShow }: LogoProps) => {
-  const clsHeader = `text-xl leading-6 m-0 text-radical-red 
-  ${isMovieDetailsShow ? "font-light" : "font-black"}`;
-  const clsSpan = `${isMovieDetailsShow ? "font-light" : "font-medium"}`;
+const Logo = () => {
+  const { movieId } = useParams();
+  const clsName = classNames(
+    ...["text-xl", "leading-6", "m-0", "text-radical-red"],
+    {
+      "font-light": movieId,
+      "font-black": !movieId,
+    },
+  );
 
   return (
-    <h1 className={clsHeader}>
+    <h1 className={clsName}>
       netflix
-      <span className={clsSpan}>roulette</span>
+      <span className={`${movieId ? "font-light" : "font-medium"}`}>
+        roulette
+      </span>
     </h1>
   );
 };
 
-Logo.defaultProps = defaultProps;
 export default Logo;

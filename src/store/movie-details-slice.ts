@@ -8,7 +8,6 @@ const initialState: MovieState = {
   movieStatus: "idle",
   movieDetails: null,
   isMovieDetailsLoading: false,
-  isMovieDetailsShow: false,
   movieErrors: null,
   movieId: "",
 };
@@ -102,11 +101,7 @@ const movieDetailsSlice = createSlice({
   name: "movie details",
   initialState,
   reducers: {
-    showMovieDetails: (state) => {
-      state.isMovieDetailsShow = true;
-    },
     hideMovieDetails: (state) => {
-      state.isMovieDetailsShow = false;
       state.movieDetails = null;
     },
     setMovieStatus: (state, action) => {
@@ -125,7 +120,6 @@ const movieDetailsSlice = createSlice({
       })
       .addCase(fetchMovieById.fulfilled, (state, action) => {
         state.isMovieDetailsLoading = false;
-        state.isMovieDetailsShow = true;
         state.movieDetails = action.payload;
       })
       .addCase(fetchMovieToEdit.pending, (state) => {
@@ -160,10 +154,6 @@ const movieDetailsSlice = createSlice({
   },
 });
 
-export const {
-  hideMovieDetails,
-  setMovieStatus,
-  resetMovieDetails,
-  setMovieId,
-} = movieDetailsSlice.actions;
+export const { setMovieStatus, resetMovieDetails, setMovieId } =
+  movieDetailsSlice.actions;
 export default movieDetailsSlice.reducer;

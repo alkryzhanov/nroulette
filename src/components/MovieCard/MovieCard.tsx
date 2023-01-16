@@ -1,13 +1,10 @@
 import React, { MouseEvent, useState } from "react";
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 import styles from "./MovieCard.module.css";
 import closeIcon from "../../assets/close-btn.svg";
 import { useAppDispatch } from "../../hooks";
-import {
-  fetchMovieById,
-  fetchMovieToEdit,
-  setMovieId,
-} from "../../store/movie-details-slice";
+import { fetchMovieToEdit, setMovieId } from "../../store/movie-details-slice";
 import { MODALS, PLACEHOLDER_IMG_LINK } from "../../constants";
 import { MovieType } from "../../types";
 import { showModal } from "../../store/modal-slice";
@@ -24,10 +21,12 @@ const MovieCard = ({ movieInfo }: MovieCardType) => {
       ? `${PLACEHOLDER_IMG_LINK}${movieInfo.title}`
       : movieInfo.poster_path;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isCtxBtnShow, setIsCtxBtnShow] = useState<boolean>(false);
   const [src, setSrc] = useState(INITIAL_SRC);
   const movieId = movieInfo.id.toString();
+
   const toggleMenu = (evt: MouseEvent) => {
     evt.stopPropagation();
 
@@ -63,9 +62,8 @@ const MovieCard = ({ movieInfo }: MovieCardType) => {
   };
 
   const onClickMovieHandler = (id: number) => {
-    dispatch(fetchMovieById(id));
+    navigate(`/search/movie=${id}`);
   };
-
   const onImgErrorHandler = () => {
     // eslint-disable-next-line no-param-reassign
     setSrc(`${PLACEHOLDER_IMG_LINK}${movieInfo.title}`);

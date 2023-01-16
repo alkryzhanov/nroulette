@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { MOVIES_URL, StatusValues } from "../constants";
+import { StatusValues } from "../constants";
 import { MoviesState } from "../types";
 
 const initialState: MoviesState = {
@@ -12,9 +12,9 @@ const initialState: MoviesState = {
 
 export const fetchAllMovies = createAsyncThunk(
   "movies/fetchAllMovies",
-  async (query: string, { rejectWithValue }) => {
+  async (url: string, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${MOVIES_URL}?&sortOrder=asc${query}`);
+      const res = await axios.get(`${url}`);
       return res.data.data;
     } catch (e: any) {
       return rejectWithValue({ message: e.response.data });
